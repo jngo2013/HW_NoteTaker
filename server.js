@@ -6,7 +6,7 @@ const uuid = require('uuid/v4');
 const database = "./db/db.json";
 // set up express app
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 // express middleware
 app.use(express.urlencoded({ extended: true }));
 //body parsing

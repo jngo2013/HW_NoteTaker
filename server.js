@@ -53,42 +53,28 @@ app.get("/api/notes", function(req, res) {
       });
       res.json(newNotes);
     });
-
+  });
+    
     app.delete("/api/notes/:id", function(req, res) {
       console.log(req.params);
       let deleteNotes =req.params.id;
       console.log(deleteNotes);
-      console.log("hi")
-      // read json file
       fs.readFile("./db/db.json","utf8",function (err, data) {
         if (err) throw err;
-        
-        //parse note data
         const dataNote = JSON.parse(data);
         console.log(dataNote);
-            //create variable to find the index of an object inside an array
             let index = dataNote.findIndex(x => x.id == deleteNotes);
-            //splice object with matching id
             dataNote.splice(index, 1);
-        
-          //rewrite json with updated notes
           fs.writeFile("./db/db.json",JSON.stringify(dataNote), function (err) {
             if(err){
               return console.log(err);
-              
             }
-            console.log("bye");
           })
-          //respond to user with new notes
         console.log(dataNote);
         res.json(data);
       }
       )
     })
-    
-  });
-  
-
   app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
   })

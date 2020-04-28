@@ -17,6 +17,7 @@ var getNotes = function() {
 
 // A function for saving a note to the db
 var saveNote = function(note) {
+
   return $.ajax({
     url: "/api/notes",
     data: note,
@@ -26,9 +27,10 @@ var saveNote = function(note) {
 
 // A function for deleting a note from the db
 var deleteNote = function(id) {
+  console.log(id);
   return $.ajax({
     url: "api/notes/" + id,
-    method: "DELETE"
+    type: "DELETE"
   });
 };
 
@@ -66,7 +68,7 @@ var handleNoteSave = function() {
 var handleNoteDelete = function(event) {
   // prevents the click listener for the list from being called when the button inside of it is clicked
   event.stopPropagation();
-
+console.log("handleNoteDelete");
   var note = $(this)
     .parent(".list-group-item")
     .data();
@@ -76,6 +78,7 @@ var handleNoteDelete = function(event) {
   }
 
   deleteNote(note.id).then(function() {
+    console.log("deleteNote");
     getAndRenderNotes();
     renderActiveNote();
   });
